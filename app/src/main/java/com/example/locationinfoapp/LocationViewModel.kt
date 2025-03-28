@@ -18,8 +18,11 @@ class LocationViewModel(
     private val _currentLocation = MutableStateFlow<GeoPoint?>(null)
     val currentLocation: StateFlow<GeoPoint?> = _currentLocation.asStateFlow()
 
-    var latitude = ""
-    var longitude = ""
+    private val _latitude = MutableStateFlow("")
+    val latitude: StateFlow<String> = _latitude.asStateFlow()
+
+    private val _longitude = MutableStateFlow("")
+    val longitude: StateFlow<String> = _longitude.asStateFlow()
 
     private val fusedLocationClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(context)
@@ -41,13 +44,11 @@ class LocationViewModel(
         ) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
-                    _currentLocation.value = GeoPoint(it.latitude,
-                        it.longitude)
-                    latitude = it.latitude.toString()
-                    longitude = it.longitude.toString()
+                    _currentLocation.value = GeoPoint(it.latitude, it.longitude)
+                    _latitude.value = "%.6f".format(it.latitude)
+                    _longitude.value = "%.6f".format(it.longitude)
                 }
             }.addOnFailureListener { e ->
-                // Handle error
                 Log.e("Location", "Error getting location", e)
             }
         }
@@ -59,13 +60,15 @@ class LocationViewModel(
             locationResult.lastLocation?.let { location ->
                 _currentLocation.value = GeoPoint(location.latitude,
                     location.longitude)
+                _latitude.value = location.latitude.toString()
+                _longitude.value = location.longitude.toString()
             }
         }
     }
 
     fun updateCoordinates(lat: String, lon: String) {
-        latitude = lat
-        longitude = lon
+        _latitude.value = lat
+        _longitude.value = lon
     }
 
     fun startLocationUpdates() {
@@ -104,11 +107,11 @@ class LocationViewModel(
     fun goToSpecifiedLocation() {
         try {
             _currentLocation.value = GeoPoint(
-                latitude.toDouble(),
-                longitude.toDouble()
+                _latitude.value.toDouble(),
+                _longitude.value.toDouble()
             )
         } catch (e: NumberFormatException) {
-            // Handle invalid coordinates
+            Log.e("Location", "Invalid coordinate format", e)
         }
     }
 
