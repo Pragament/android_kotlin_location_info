@@ -25,19 +25,11 @@ fun LocationScreen(
     val context = LocalContext.current
     val currentLocation by viewModel.currentLocation.collectAsState()
 
-    // Local state for text fields
-    var latitudeText by remember { mutableStateOf(viewModel.latitude) }
-    var longitudeText by remember { mutableStateOf(viewModel.longitude) }
+    val latitudeText by viewModel.latitude.collectAsState()
+    val longitudeText by viewModel.longitude.collectAsState()
 
-    // Update ViewModel when text changes
     LaunchedEffect(latitudeText, longitudeText) {
         viewModel.updateCoordinates(latitudeText, longitudeText)
-    }
-
-    // Update local state when ViewModel changes
-    LaunchedEffect(viewModel.latitude, viewModel.longitude) {
-        latitudeText = viewModel.latitude
-        longitudeText = viewModel.longitude
     }
 
     var mapView by remember { mutableStateOf<MapView?>(null) }
@@ -51,7 +43,6 @@ fun LocationScreen(
         }
     ) { innerPadding ->
         Box(modifier = Modifier.fillMaxSize()) {
-            // Map View
             AndroidView(
                 factory = { ctx ->
                     MapView(ctx).apply {
@@ -79,7 +70,6 @@ fun LocationScreen(
                 }
             }
 
-            // Controls Column
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
@@ -98,7 +88,8 @@ fun LocationScreen(
                         ) {
                             OutlinedTextField(
                                 value = latitudeText,
-                                onValueChange = { latitudeText = it },
+                                onValueChange = {
+                                    viewModel.updateCoordinates(it, longitudeText)  },
                                 label = { Text("Latitude") },
                                 modifier = Modifier.weight(1f),
                                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -109,7 +100,8 @@ fun LocationScreen(
 
                             OutlinedTextField(
                                 value = longitudeText,
-                                onValueChange = { longitudeText = it },
+                                onValueChange = {
+                                    viewModel.updateCoordinates(latitudeText, it) },
                                 label = { Text("Longitude") },
                                 modifier = Modifier.weight(1f),
                                 keyboardOptions = KeyboardOptions.Default.copy(
