@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("kapt")
 }
 
 android {
@@ -53,6 +54,15 @@ dependencies {
 
     implementation(libs.androidx.activity.ktx)  // For ComponentActivity
     implementation(libs.androidx.fragment.ktx)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.androidx.room.compiler)
+
+    implementation(libs.androidx.material.icons.extended)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
