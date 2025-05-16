@@ -1,53 +1,36 @@
 [versions]
-agp = "8.8.0-alpha08"
-coilCompose = "2.7.0"
-fragmentKtx = "1.8.6"
-kotlin = "2.0.0"
-coreKtx = "1.15.0"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.1"
-composeBom = "2024.04.01"
-materialIconsExtended = "1.7.8"
-osmbonuspack = "6.9.0"
-osmdroidAndroid = "6.1.16"
-playServicesLocation = "21.3.0"
-roomCompiler = "2.7.0"
-roomKtx = "2.7.0"
-roomRuntime = "2.7.0"
+compose = "1.5.0"
+compose-compiler = "1.5.3"
+room = "2.6.1"
+kotlin = "1.9.0"  # Specify the Kotlin version (make sure it's compatible)
 
 [libraries]
-androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityCompose" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
-androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
-androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
-coil = { module = "io.coil-kt:coil", version.ref = "coilCompose" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-osmbonuspack = { module = "com.github.MKergall:osmbonuspack", version.ref = "osmbonuspack" }
-osmdroid-android = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroidAndroid" }
-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+# AndroidX Libraries
+androidx-core-ktx = "androidx.core:core-ktx:1.12.0"
+androidx-lifecycle-runtime-ktx = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
+androidx-activity-compose = "androidx.activity:activity-compose:1.8.1"
+
+# Compose Libraries
+androidx-compose-bom = "androidx.compose:compose-bom:2024.03.00"
+androidx-compose-ui = "androidx.compose.ui:ui:${versions.compose}"
+androidx-compose-foundation = "androidx.compose.foundation:foundation:${versions.compose}"
+androidx-compose-material3 = "androidx.compose.material3:material3:${versions.compose}"
+androidx-compose-ui-tooling = "androidx.compose.ui:ui-tooling:${versions.compose}"
+androidx-compose-ui-tooling-preview = "androidx.compose.ui:ui-tooling-preview:${versions.compose}"
+androidx-compose-ui-test-junit4 = "androidx.compose.ui:ui-test-junit4:${versions.compose}"
+
+# Room Libraries
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+# Testing Libraries
+junit = "junit:junit:4.13.2"
+androidx-junit = "androidx.test.ext:junit:1.1.5"
+androidx-espresso-core = "androidx.test.espresso:espresso-core:3.5.1"
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
+android.application = "com.android.application"
+kotlin.android = "org.jetbrains.kotlin.android"  # Corrected Kotlin plugin
+kotlin.kapt = "org.jetbrains.kotlin.kapt"
+kotlin.ksp = "com.google.devtools.ksp"

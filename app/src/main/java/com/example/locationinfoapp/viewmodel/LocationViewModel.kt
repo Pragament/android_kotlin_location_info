@@ -5,30 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.locationinfoapp.data.LocationDao
-import com.example.locationinfoapp.model.PincodeLocation
-import kotlinx.coroutines.flow.Flow
 
 class LocationViewModel(
     private val context: Context,
     private val locationDao: LocationDao
 ) : ViewModel() {
-
-    val allLocations: Flow<List<PincodeLocation>> = locationDao.getAllLocations()
-
-    suspend fun insertLocation(location: PincodeLocation) {
-        locationDao.insert(location)
-    }
-
-    suspend fun deleteLocation(location: PincodeLocation) {
-        locationDao.delete(location)
-    }
-
     companion object {
         fun provideFactory(
             context: Context,
             locationDao: LocationDao
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return LocationViewModel(context, locationDao) as T
             }

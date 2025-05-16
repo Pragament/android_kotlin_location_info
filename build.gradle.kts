@@ -1,6 +1,11 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// Root-level build.gradle.kts
+
+// Typically left empty unless applying global plugins
 plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.compose) apply false
+    // No plugins are usually applied here for modern Android projects using version catalogs
+}
+
+// Optional: clean task for convenience
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
